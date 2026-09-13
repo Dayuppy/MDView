@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src https://app.local; worker-src https://app.local; style-src https://app.local 'unsafe-inline'; style-src-attr 'unsafe-inline'; img-src https://app.local https://doc.local data: https: http:; media-src https://doc.local data:; font-src https://app.local; connect-src https://app.local https://doc.local">
+<title>MD Viewer</title>
+<script src="boot.js"></script>
+<link rel="stylesheet" href="vendor/katex.min.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to content</a>
+
+<div id="app">
+  <header id="topbar" role="banner">
+    <button id="btn-toc" class="iconbtn" aria-label="Section list" aria-expanded="false" aria-controls="sidebar" title="Section list (Ctrl+B)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5h12M2 8h12M2 12.5h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+    </button>
+    <span class="tbar-sep" aria-hidden="true"></span>
+    <button id="btn-back" class="iconbtn" aria-label="Back" title="Back (Alt+Left arrow)" disabled>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2.5 4.5 8 10 13.5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="btn-fwd" class="iconbtn" aria-label="Forward" title="Forward (Alt+Right arrow)" disabled>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2.5 11.5 8 6 13.5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div id="doctitle" role="heading" aria-level="1"><span id="doctitle-text">MD Viewer</span></div>
+    <div class="spacer"></div>
+    <button id="btn-edit" class="iconbtn" aria-label="Edit this file" aria-pressed="false" title="Edit (Ctrl+E)" hidden>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.6 1.9a1.4 1.4 0 0 1 2 2l-.8.8-2-2ZM10 3.4l2 2-7 7H3v-2Z" fill="currentColor"/><path d="M2 14.6h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    </button>
+    <button id="btn-find" class="iconbtn" aria-label="Find in document" title="Find (Ctrl+F)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="6.8" cy="6.8" r="4.3" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M10.2 10.2 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <button id="btn-a11y" class="iconbtn" aria-label="Reading and accessibility settings" title="Reading &amp; accessibility settings (Ctrl+,)">
+      <span class="aa" aria-hidden="true">Aa</span>
+    </button>
+    <button id="btn-theme" class="iconbtn" aria-label="Theme: light" title="Toggle theme">
+      <svg id="theme-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><g stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M3 3l1.3 1.3M11.7 11.7 13 13M13 3l-1.3 1.3M4.3 11.7 3 13"/></g></svg>
+      <svg id="theme-moon" viewBox="0 0 16 16" aria-hidden="true" hidden><path d="M13.5 9.5A6 6 0 0 1 6.5 2.5 6 6 0 1 0 13.5 9.5Z" fill="currentColor"/></svg>
+      <svg id="theme-auto" viewBox="0 0 16 16" aria-hidden="true" hidden><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 2a6 6 0 0 0 0 12Z" fill="currentColor"/></svg>
+    </button>
+    <button id="btn-menu" class="iconbtn" aria-label="Menu" aria-haspopup="menu" aria-expanded="false" title="Menu">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><g fill="currentColor"><circle cx="8" cy="3" r="1.4"/><circle cx="8" cy="8" r="1.4"/><circle cx="8" cy="13" r="1.4"/></g></svg>
+    </button>
+  </header>
+
+  <div id="findbar" role="search" aria-label="Find in document" hidden>
+    <input id="find-input" type="text" placeholder="Find in document…" aria-label="Search text" autocomplete="off" spellcheck="false">
+    <span id="find-count" aria-hidden="true"></span>
+    <button id="find-case" class="iconbtn small" aria-label="Match case" aria-pressed="false" title="Match case"><span class="aa-sm" aria-hidden="true">Aa</span></button>
+    <button id="find-word" class="iconbtn small" aria-label="Whole word" aria-pressed="false" title="Whole word"><span class="aa-sm" aria-hidden="true">W</span></button>
+    <button id="find-regex" class="iconbtn small" aria-label="Regular expression" aria-pressed="false" title="Regular expression"><span class="aa-sm" aria-hidden="true">.*</span></button>
+    <button id="find-prev" class="iconbtn small" aria-label="Previous match" title="Previous (Shift+F3)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 10l4-4 4 4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="find-next" class="iconbtn small" aria-label="Next match" title="Next (F3)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <input id="replace-input" type="text" placeholder="Replace with…" aria-label="Replacement text" autocomplete="off" spellcheck="false" hidden>
+    <button id="replace-one" class="findbtn" hidden title="Replace this match (Enter in the replace box)">Replace</button>
+    <button id="replace-all" class="findbtn" hidden title="Replace every match">All</button>
+    <button id="find-close" class="iconbtn small" aria-label="Close find bar" title="Close (Esc)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <div id="progress" aria-hidden="true"><div id="progress-fill"></div></div>
+
+  <div id="layout">
+    <nav id="sidebar" aria-label="Table of contents" hidden>
+      <div class="sidebar-head">Contents</div>
+      <input id="toc-filter" type="text" placeholder="Filter sections…" aria-label="Filter section list" autocomplete="off" spellcheck="false">
+      <p id="toc-empty" hidden>No matching sections.</p>
+      <ul id="toc-list" role="list"></ul>
+    </nav>
+    <div id="sidebar-resizer" role="separator" aria-orientation="vertical"
+         aria-label="Section list width" tabindex="0"
+         aria-valuemin="180" aria-valuemax="520" aria-valuenow="288" hidden></div>
+    <div id="sidebar-backdrop" hidden></div>
+    <main id="main" tabindex="-1">
+      <div id="welcome" hidden>
+        <div class="welcome-inner">
+          <div class="welcome-logo" aria-hidden="true">
+            <svg viewBox="0 0 208 128"><rect x="4" y="4" width="200" height="120" rx="14" fill="none" stroke="currentColor" stroke-width="9"/><path d="M32 94V34h13l19 24 19-24h13v60H83V59L64 82 45 59v35Zm119 0-27-30h17V34h20v30h17Z" fill="currentColor"/></svg>
+          </div>
+          <h1>MD Viewer</h1>
+          <p class="welcome-sub">A fast, accessible Markdown reader. Open a file, drop one anywhere in this window, or right-click a <code>.md</code> file in Explorer and choose <strong>Open with</strong>.</p>
+          <div class="welcome-actions">
+            <button id="btn-open" class="primary">Open a file… <kbd>Ctrl+O</kbd></button>
+            <button id="btn-new">New document <kbd>Ctrl+N</kbd></button>
+            <button id="btn-demo">See what it can render</button>
+          </div>
+          <div id="recent-wrap" hidden>
+            <h2>Recent</h2>
+            <ul id="recent-list" role="list"></ul>
+          </div>
+          <p class="welcome-tip">Press <kbd>F1</kbd> anytime for keyboard shortcuts.</p>
+        </div>
+      </div>
+      <article id="content" class="markdown-body" lang=""></article>
+      <div id="editor-toolbar" role="toolbar" aria-label="Formatting" hidden>
+        <button type="button" class="iconbtn small" data-fmt="heading" aria-label="Heading (cycles levels)" title="Heading — click again to cycle H1&#8211;H6, then back to paragraph">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2.5v11M11 2.5v11M3 8h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="bold" aria-label="Bold" title="Bold (Ctrl+B)">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.6h4.1a2.5 2.5 0 0 1 1.3 4.6A2.8 2.8 0 0 1 8.6 13H4Zm1.9 1.8v3h2.1a1.4 1.4 0 0 0 0-3Zm0 4.6V13h2.5a1.6 1.6 0 0 0 0-3.2Z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="italic" aria-label="Italic" title="Italic (Ctrl+I)">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 2.7h5M4.5 13.3h5M9.7 2.7l-3.4 10.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="strike" aria-label="Strikethrough" title="Strikethrough">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.6 5C4.7 3.3 6.1 2.3 8 2.3s3.4 1 3.5 2.4M4.4 11.3C4.6 12.9 6 13.8 8 13.8s3.4-.9 3.5-2.3M2 8h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="code" aria-label="Inline code" title="Inline code (Ctrl+`)">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.6 4.2 2.2 8l3.4 3.8M10.4 4.2 13.8 8l-3.4 3.8" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="tbar-sep" aria-hidden="true"></span>
+        <button type="button" class="iconbtn small" data-fmt="ul" aria-label="Bullet list" title="Bullet list">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="2.6" cy="4" r="1" fill="currentColor"/><circle cx="2.6" cy="8" r="1" fill="currentColor"/><circle cx="2.6" cy="12" r="1" fill="currentColor"/><path d="M6 4h8M6 8h8M6 12h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="ol" aria-label="Numbered list" title="Numbered list">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.2h1v2.6M2 5.8h1.6M2.2 9.2c.3-.5 1.6-.5 1.6.2 0 .4-.4.6-.8.9-.5.4-.8.7-.8 1.2h1.8" stroke="currentColor" stroke-width="0.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 4h8M6 8h8M6 12h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="task" aria-label="Task list" title="Task list">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.6" y="2.6" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M2.5 4.5l.8.8 1.5-1.7" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="1.6" y="9.4" width="4" height="4" rx="0.8" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M7.5 4.6h7M7.5 11.4h7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="quote" aria-label="Blockquote" title="Blockquote">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 9.5V6.8a2 2 0 0 1 2-2M8 9.5V6.8a2 2 0 0 1 2-2" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M2 9.5h2.6v1.8a2 2 0 0 1-2 2M8 9.5h2.6v1.8a2 2 0 0 1-2 2" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <span class="tbar-sep" aria-hidden="true"></span>
+        <button type="button" class="iconbtn small" data-fmt="link" aria-label="Link" title="Link (Ctrl+K)">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.8 9.2 9.2 6.8M6 4.5 7.3 3.2a2.3 2.3 0 0 1 3.3 3.3L9.2 7.8M10 11.5l-1.3 1.3a2.3 2.3 0 0 1-3.3-3.3l1.4-1.4" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="image" aria-label="Image" title="Image">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.6" y="2.6" width="12.8" height="10.8" rx="1.2" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="5.1" cy="5.9" r="1" fill="currentColor"/><path d="M2.4 11.3 5.8 8l2.4 2.4L10.8 8l2.8 2.9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="table" aria-label="Table" title="Insert table">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.6" y="2.6" width="12.8" height="10.8" rx="1" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M1.6 6.3h12.8M1.6 9.7h12.8M6 2.6v10.8M10.3 2.6v10.8" stroke="currentColor" stroke-width="1"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="codeblock" aria-label="Code block" title="Code block">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.6" y="2.6" width="12.8" height="10.8" rx="1.2" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M5.8 6.2 3.8 8l2 1.8M10.2 6.2l2 1.8-2 1.8" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="hr" aria-label="Horizontal rule" title="Horizontal rule">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+        <span class="tbar-sep" aria-hidden="true"></span>
+        <button type="button" class="iconbtn small" data-fmt="sub" aria-label="Subscript" title="Subscript">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><text x="1" y="9" font-size="8" font-family="serif" fill="currentColor">x</text><text x="8" y="13.5" font-size="6" font-family="serif" fill="currentColor">2</text></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="sup" aria-label="Superscript" title="Superscript">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><text x="1" y="12" font-size="8" font-family="serif" fill="currentColor">x</text><text x="8" y="6.5" font-size="6" font-family="serif" fill="currentColor">2</text></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="math" aria-label="Inline math" title="Inline math">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><text x="2" y="12" font-size="11" font-family="serif" fill="currentColor">&#8721;</text></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="mathblock" aria-label="Math block" title="Math block">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.6" y="2.6" width="12.8" height="10.8" rx="1.2" stroke="currentColor" stroke-width="1.1" fill="none"/><text x="4" y="12" font-size="9" font-family="serif" fill="currentColor">&#8721;</text></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="mermaid" aria-label="Diagram" title="Mermaid diagram">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2" width="5.5" height="3.6" rx="0.8" stroke="currentColor" stroke-width="1.1" fill="none"/><rect x="9" y="10.4" width="5.5" height="3.6" rx="0.8" stroke="currentColor" stroke-width="1.1" fill="none"/><path d="M4.3 5.6v2.8a2 2 0 0 0 2 2h4.4a2 2 0 0 1 2 2v0.6" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="footnote" aria-label="Footnote" title="Footnote — adds a reference here and a definition at the end">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><text x="1" y="10" font-size="8.5" font-family="serif" fill="currentColor">f</text><text x="7" y="6.5" font-size="6" font-family="serif" fill="currentColor">1</text><path d="M2 13.5h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="deflist" aria-label="Definition list" title="Definition list">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.6h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M4 8h9M4 12.4h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M2 7v2.5M2 11.4v2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="abbr" aria-label="Abbreviation" title="Abbreviation">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><text x="0.5" y="10.5" font-size="6.5" font-weight="700" font-family="sans-serif" fill="currentColor">ABBR</text><path d="M1 13h11" stroke="currentColor" stroke-width="1.1" stroke-dasharray="1.4 1.2" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="mark" aria-label="Highlight" title="Highlight">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="4.5" width="13" height="7" rx="0.8" fill="currentColor" opacity="0.28"/><text x="2.3" y="10.3" font-size="7.5" font-weight="700" font-family="sans-serif" fill="currentColor">A</text></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="ins" aria-label="Inserted text" title="Inserted text">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><text x="2" y="10.5" font-size="8" font-family="serif" fill="currentColor">A</text><path d="M2 12.5h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M11 3v6M8 6h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="iconbtn small" data-fmt="emoji" aria-label="Emoji shortcode" title="Emoji shortcode">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" fill="none"/><circle cx="5.7" cy="6.6" r="0.9" fill="currentColor"/><circle cx="10.3" cy="6.6" r="0.9" fill="currentColor"/><path d="M5.2 9.8c.7 1.1 1.8 1.7 2.8 1.7s2.1-.6 2.8-1.7" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <textarea id="editor" spellcheck="false" wrap="soft" hidden
+                aria-label="Markdown source. Press Escape to leave the text area."></textarea>
+    </main>
+  </div>
+
+  <footer id="statusbar" hidden>
+    <div class="sb-pages">
+      <button id="page-prev" class="iconbtn small" aria-label="Previous page" title="Previous page (Page Up)">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 10l4-4 4 4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <label class="sb-lab" for="page-input">Page</label>
+      <input id="page-input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" value="1"
+             aria-label="Page number. Type a number and press Enter to jump to that page.">
+      <span class="sb-total" id="page-total">/ 1</span>
+      <button id="page-next" class="iconbtn small" aria-label="Next page" title="Next page (Page Down)">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <button id="sb-section" class="sb-section" title="Show the section list (Ctrl+B)" hidden><span id="sb-section-text"></span></button>
+    <span id="sb-state" class="sb-state" hidden><span class="dot" aria-hidden="true"></span><span id="sb-state-text"></span></span>
+    <span id="sb-pct" class="sb-pct">0%</span>
+  </footer>
+</div>
+
+<div id="menu-pop" role="menu" aria-label="Application menu" hidden>
+  <button role="menuitem" data-act="new">New document <span class="mkbd">Ctrl+N</span></button>
+  <button role="menuitem" data-act="open">Open… <span class="mkbd">Ctrl+O</span></button>
+  <button role="menuitem" data-act="edit">Edit this file <span class="mkbd">Ctrl+E</span></button>
+  <button role="menuitem" data-act="save">Save <span class="mkbd">Ctrl+S</span></button>
+  <button role="menuitem" data-act="saveas">Save a copy… <span class="mkbd">Ctrl+Shift+S</span></button>
+  <button role="menuitem" data-act="reload">Reload file <span class="mkbd">F5</span></button>
+  <button role="menuitem" data-act="reveal">Show in Explorer</button>
+  <button role="menuitem" data-act="print">Print… <span class="mkbd">Ctrl+P</span></button>
+  <button role="menuitem" data-act="exporthtml">Export as HTML…</button>
+  <button role="menuitem" data-act="exportpdf">Export as PDF…</button>
+  <button role="menuitem" data-act="copyrich">Copy as rich text</button>
+  <hr role="separator">
+  <button role="menuitem" data-act="demo">Feature tour</button>
+  <button role="menuitem" data-act="help">Help &amp; shortcuts <span class="mkbd">F1</span></button>
+  <hr role="separator" id="menu-recent-sep" hidden>
+  <div id="menu-recent" role="group" aria-label="Recent files"></div>
+</div>
+
+<div id="a11y-overlay" class="overlay" hidden>
+  <div id="a11y-panel" role="dialog" aria-modal="true" aria-labelledby="a11y-title">
+    <div class="panel-head">
+      <h2 id="a11y-title">Reading &amp; accessibility</h2>
+      <button class="iconbtn panel-close" data-close="a11y" aria-label="Close">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="panel-body">
+      <div class="field">
+        <label for="set-font">Reading font</label>
+        <select id="set-font">
+          <option value="system">System default</option>
+          <option value="serif">Serif (Georgia)</option>
+          <option value="sans">High legibility (Verdana)</option>
+          <option value="dyslexic">Dyslexia-friendly (Comic Sans)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="set-size">Text size <output id="out-size" for="set-size">100%</output></label>
+        <input id="set-size" type="range" min="85" max="200" step="5" value="100">
+      </div>
+      <div class="field">
+        <label for="set-lh">Line spacing <output id="out-lh" for="set-lh">1.60</output></label>
+        <input id="set-lh" type="range" min="1.3" max="2.2" step="0.05" value="1.6">
+      </div>
+      <div class="field">
+        <label for="set-ls">Letter spacing <output id="out-ls" for="set-ls">0.00em</output></label>
+        <input id="set-ls" type="range" min="0" max="0.15" step="0.01" value="0">
+      </div>
+      <div class="field">
+        <label for="set-width">Content width</label>
+        <select id="set-width">
+          <option value="narrow">Narrow</option>
+          <option value="normal" selected>Comfortable</option>
+          <option value="wide">Wide</option>
+          <option value="full">Full window</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="set-motion">Animations</label>
+        <select id="set-motion">
+          <option value="auto" selected>Follow system setting</option>
+          <option value="off">Reduced (no animations)</option>
+          <option value="on">Normal</option>
+        </select>
+      </div>
+      <label class="check"><input id="set-contrast" type="checkbox"> High contrast colors</label>
+      <label class="check"><input id="set-underline" type="checkbox" checked> Always underline links</label>
+      <label class="check"><input id="set-dim" type="checkbox" checked> Dim images in dark mode</label>
+      <label class="check"><input id="set-wrap" type="checkbox"> Wrap long code lines</label>
+      <label class="check"><input id="set-spellcheck" type="checkbox"> Spellcheck while editing</label>
+      <label class="check"><input id="set-restore" type="checkbox"> Reopen last document on launch</label>
+      <div class="panel-note">Window zoom: <kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>−</kbd> (scales everything). These preferences are saved inside MDView.exe itself.</div>
+      <button id="set-reset" class="subtle">Reset all to defaults</button>
+    </div>
+  </div>
+</div>
+
+<div id="help-overlay" class="overlay" hidden>
+  <div id="help-panel" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="panel-head">
+      <h2 id="help-title">Help &amp; shortcuts</h2>
+      <button class="iconbtn panel-close" data-close="help" aria-label="Close">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="panel-body">
+      <div id="help-docinfo" hidden>
+        <h3>Current document</h3>
+        <p id="help-docinfo-text"></p>
+        <div id="help-docstats" class="doc-stats"></div>
+      </div>
+      <h3>Keyboard shortcuts</h3>
+      <table class="help-keys">
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Open a file</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>F</kbd> or <kbd>/</kbd></td><td>Find in document</td></tr>
+          <tr><td><kbd>F3</kbd> / <kbd>Shift</kbd>+<kbd>F3</kbd></td><td>Next / previous match</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>B</kbd></td><td>Show / hide the section list</td></tr>
+          <tr><td><kbd>n</kbd> / <kbd>p</kbd></td><td>Next / previous section</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>←</kbd> / <kbd>Alt</kbd>+<kbd>→</kbd></td><td>Back / forward — undoes section jumps and link jumps, and moves between files</td></tr>
+          <tr><td><kbd>Page Up</kbd> / <kbd>Page Down</kbd></td><td>Previous / next page</td></tr>
+          <tr><td><kbd>g</kbd></td><td>Go to page (type a number, press Enter)</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>−</kbd> / <kbd>0</kbd></td><td>Zoom in / out / reset</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td><td>New document</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>E</kbd></td><td>Edit the file / back to reading</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save (only ever writes when you ask)</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></td><td>Save a copy…</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>,</kbd></td><td>Reading &amp; accessibility settings</td></tr>
+          <tr><td><kbd>F5</kbd></td><td>Reload file</td></tr>
+          <tr><td><kbd>F11</kbd></td><td>Full screen — also hides the topbar and status bar for distraction-free reading</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>Print</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>W</kbd></td><td>Close</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Close panels / clear search / leave full screen</td></tr>
+        </tbody>
+      </table>
+      <h3>Good to know</h3>
+      <ul class="help-notes">
+        <li>The <strong>section list</strong> on the left is built from the document's headings; the current section is highlighted as you scroll, and the status bar names it at the bottom. Drag its right edge to resize it, or double-click that edge to reset.</li>
+        <li>The <strong>⋮ menu</strong> lists your recent files, and hovering the percentage at the bottom right shows the word count and reading time.</li>
+        <li><strong>Task list</strong> checkboxes are clickable right in the reading view — no need to switch to editing first. Checking or unchecking one marks the document unsaved, the same as any other edit.</li>
+        <li><strong>Editing</strong> (<kbd>Ctrl</kbd>+<kbd>E</kbd>) swaps the page for the raw Markdown and a formatting toolbar. While editing, <kbd>Ctrl</kbd>+<kbd>B</kbd>, <kbd>Ctrl</kbd>+<kbd>I</kbd>, <kbd>Ctrl</kbd>+<kbd>K</kbd> and <kbd>Ctrl</kbd>+<kbd>`</kbd> wrap the selection in bold, italic, a link or code; <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> indent and outdent; <kbd>Enter</kbd> carries list, task and quote markers onto the next line (press it on an empty item to end the block); pasting a link over selected text turns it into a link; inside a table <kbd>Tab</kbd> tidies the columns and moves to the next cell; pasting from a browser or word processor arrives as Markdown (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> pastes plain text); dropping an image file inserts a reference to it at the caret, using a path relative to the document when the image lives under it; pasting a screenshot or copied image saves it as a new file next to the document first (a visible toast names it, since — unlike a drop — this writes something new), then inserts it the same way; <kbd>Esc</kbd> steps out of the text area. Toggling back to reading previews your unsaved changes without touching the file.</li>
+        <li>The <strong>formatting toolbar</strong> above the text area (only visible while editing) covers what the shortcuts don't: a heading button that cycles the current line through H1&#8211;H6 and back to a paragraph, strikethrough, bullet/numbered/task lists, blockquote, a fenced code block, a starter table, an image placeholder, a horizontal rule, subscript and superscript, inline and block math, a Mermaid diagram starter, a footnote (adds the reference here and the definition at the end), a definition list, an abbreviation, a highlight, inserted text, and an emoji shortcode placeholder. Each button acts on the current selection or line and announces what it did for screen readers. Arrow keys, Home and End move between toolbar buttons without leaving Tab order for the rest of the page.</li>
+        <li>While editing, the section list is rebuilt from what you type (click an entry to jump the caret there), and the status bar shows a live word count with the caret's line and column. Adding an item to a numbered list renumbers the rest of it, and every edit is undoable with <kbd>Ctrl</kbd>+<kbd>Z</kbd>.</li>
+        <li>Nothing is written to disk unless you press <kbd>Ctrl</kbd>+<kbd>S</kbd>. Saves preserve the file's original line endings and encoding, and are written to a temporary file first so a failure can't truncate your document. If another program changes the file while you have unsaved edits, the viewer keeps yours and tells you.</li>
+        <li><strong>Pages</strong> are screenfuls of this window, like an e-reader — so the page count changes if you resize the window or zoom. Type a number in the page box (or press <kbd>g</kbd>) to jump.</li>
+        <li><strong>Back</strong> returns you from any jump — a section you clicked, a link you followed, or a page you typed — not just between files.</li>
+        <li>The document reloads automatically when another program saves it.</li>
+        <li>Your preferences are stored <em>inside</em> MDView.exe (an NTFS file stream) — nothing is written to the registry or your user folder. If you copy the exe to a non-NTFS drive, preferences simply reset.</li>
+        <li>Links to websites open in your default browser. Links to other Markdown files open right here — use <kbd>Alt</kbd>+<kbd>←</kbd> to go back.</li>
+        <li>To make double-clicking .md files open this app: right-click a .md file → Open with → Choose another app → MDView.exe → Always.</li>
+      </ul>
+      <p class="about-line">MD Viewer <span id="help-version"></span> — renders CommonMark + GitHub-flavored Markdown, math (KaTeX), footnotes, task lists, alerts, and more.</p>
+    </div>
+  </div>
+</div>
+
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <button id="lightbox-close" class="iconbtn" aria-label="Close image viewer">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+  </button>
+  <button id="lightbox-prev" class="iconbtn" aria-label="Previous image" title="Previous image (Left arrow)">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2.5 4.5 8 10 13.5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button id="lightbox-next" class="iconbtn" aria-label="Next image" title="Next image (Right arrow)">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2.5 11.5 8 6 13.5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <img id="lightbox-img" alt="" draggable="false">
+  <div id="lightbox-caption"></div>
+  <div id="lightbox-zoom">
+    <button id="lightbox-zoom-out" class="iconbtn small" aria-label="Zoom out" title="Zoom out (−)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <button id="lightbox-zoom-reset" class="iconbtn small" aria-label="Reset zoom" title="Reset zoom (0)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.3" stroke="currentColor" stroke-width="1.7" fill="none"/></svg>
+    </button>
+    <button id="lightbox-zoom-in" class="iconbtn small" aria-label="Zoom in" title="Zoom in (+)">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M8 3v10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="footpop" role="tooltip" hidden></div>
+<div id="toast" hidden></div>
+<div id="announce" class="sr-only" role="status" aria-live="polite"></div>
+
+<script src="vendor/markdown-it.min.js"></script>
+<script src="vendor/markdown-it-footnote.min.js"></script>
+<script src="vendor/markdown-it-deflist.min.js"></script>
+<script src="vendor/markdown-it-task-lists.min.js"></script>
+<script src="vendor/markdown-it-anchor.umd.min.js"></script>
+<script src="vendor/markdown-it-sub.min.js"></script>
+<script src="vendor/markdown-it-sup.min.js"></script>
+<script src="vendor/markdown-it-mark.min.js"></script>
+<script src="vendor/markdown-it-ins.min.js"></script>
+<script src="vendor/markdown-it-abbr.min.js"></script>
+<script src="vendor/markdown-it-emoji.min.js"></script>
+<script src="vendor/katex.min.js"></script>
+<script src="vendor/mhchem.min.js"></script>
+<script src="vendor/texmath.min.js"></script>
+<script src="vendor/purify.min.js"></script>
+<script src="vendor/highlight.min.js"></script>
+<script src="vendor/lang-powershell.min.js"></script>
+<script src="vendor/lang-dos.min.js"></script>
+<script src="vendor/lang-dockerfile.min.js"></script>
+<script src="vendor/lang-cmake.min.js"></script>
+<script src="vendor/lang-x86asm.min.js"></script>
+<script src="vendor/lang-nginx.min.js"></script>
+<!-- vendor/turndown.min.js and vendor/turndown-plugin-gfm.js are only needed
+     for paste-as-Markdown in the editor; ensureTurndown() in app.js loads
+     them on demand instead of blocking every launch on a feature most
+     document opens never touch. -->
+<script src="md-setup.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

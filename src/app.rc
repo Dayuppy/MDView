@@ -1,0 +1,90 @@
+#include <winres.h>
+#include "resource.h"
+
+IDI_APP ICON "..\\assets\\app.ico"
+
+1 RT_MANIFEST "app.manifest"
+
+IDR_INDEX_HTML  RCDATA "..\\assets\\index.html"
+IDR_APP_CSS     RCDATA "..\\assets\\app.css"
+IDR_APP_JS      RCDATA "..\\assets\\app.js"
+IDR_DEMO_MD     RCDATA "..\\assets\\demo.md"
+IDR_APP_BOOT    RCDATA "..\\assets\\boot.js"
+
+IDR_V_MARKDOWNIT RCDATA "..\\assets\\vendor\\markdown-it.min.js"
+IDR_V_FOOTNOTE   RCDATA "..\\assets\\vendor\\markdown-it-footnote.min.js"
+IDR_V_DEFLIST    RCDATA "..\\assets\\vendor\\markdown-it-deflist.min.js"
+IDR_V_TASKLISTS  RCDATA "..\\assets\\vendor\\markdown-it-task-lists.min.js"
+IDR_V_ANCHOR     RCDATA "..\\assets\\vendor\\markdown-it-anchor.umd.min.js"
+IDR_V_SUB        RCDATA "..\\assets\\vendor\\markdown-it-sub.min.js"
+IDR_V_SUP        RCDATA "..\\assets\\vendor\\markdown-it-sup.min.js"
+IDR_V_MARK       RCDATA "..\\assets\\vendor\\markdown-it-mark.min.js"
+IDR_V_INS        RCDATA "..\\assets\\vendor\\markdown-it-ins.min.js"
+IDR_V_ABBR       RCDATA "..\\assets\\vendor\\markdown-it-abbr.min.js"
+IDR_V_EMOJI      RCDATA "..\\assets\\vendor\\markdown-it-emoji.min.js"
+IDR_V_TEXMATH    RCDATA "..\\assets\\vendor\\texmath.min.js"
+IDR_V_PURIFY     RCDATA "..\\assets\\vendor\\purify.min.js"
+IDR_V_HIGHLIGHT  RCDATA "..\\assets\\vendor\\highlight.min.js"
+IDR_V_KATEX_JS   RCDATA "..\\assets\\vendor\\katex.min.js"
+IDR_V_KATEX_CSS  RCDATA "..\\assets\\vendor\\katex.min.css"
+IDR_V_MERMAID    RCDATA "..\\assets\\vendor\\mermaid.min.js"
+IDR_V_MHCHEM     RCDATA "..\\assets\\vendor\\mhchem.min.js"
+IDR_V_LANG_PS     RCDATA "..\\assets\\vendor\\lang-powershell.min.js"
+IDR_V_LANG_DOS    RCDATA "..\\assets\\vendor\\lang-dos.min.js"
+IDR_V_LANG_DOCKER RCDATA "..\\assets\\vendor\\lang-dockerfile.min.js"
+IDR_V_LANG_CMAKE  RCDATA "..\\assets\\vendor\\lang-cmake.min.js"
+IDR_V_LANG_X86    RCDATA "..\\assets\\vendor\\lang-x86asm.min.js"
+IDR_V_LANG_NGINX  RCDATA "..\\assets\\vendor\\lang-nginx.min.js"
+IDR_V_TURNDOWN     RCDATA "..\\assets\\vendor\\turndown.min.js"
+IDR_V_TURNDOWN_GFM RCDATA "..\\assets\\vendor\\turndown-plugin-gfm.js"
+IDR_MD_SETUP       RCDATA "..\\assets\\md-setup.js"
+IDR_WORKER         RCDATA "..\\assets\\worker.js"
+
+IDR_F_AMS_R    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_AMS-Regular.woff2"
+IDR_F_CAL_B    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Caligraphic-Bold.woff2"
+IDR_F_CAL_R    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Caligraphic-Regular.woff2"
+IDR_F_FRA_B    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Fraktur-Bold.woff2"
+IDR_F_FRA_R    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Fraktur-Regular.woff2"
+IDR_F_MAIN_B   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Main-Bold.woff2"
+IDR_F_MAIN_BI  RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Main-BoldItalic.woff2"
+IDR_F_MAIN_I   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Main-Italic.woff2"
+IDR_F_MAIN_R   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Main-Regular.woff2"
+IDR_F_MATH_BI  RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Math-BoldItalic.woff2"
+IDR_F_MATH_I   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Math-Italic.woff2"
+IDR_F_SANS_B   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_SansSerif-Bold.woff2"
+IDR_F_SANS_I   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_SansSerif-Italic.woff2"
+IDR_F_SANS_R   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_SansSerif-Regular.woff2"
+IDR_F_SCRIPT_R RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Script-Regular.woff2"
+IDR_F_SIZE1    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Size1-Regular.woff2"
+IDR_F_SIZE2    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Size2-Regular.woff2"
+IDR_F_SIZE3    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Size3-Regular.woff2"
+IDR_F_SIZE4    RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Size4-Regular.woff2"
+IDR_F_TYPE_R   RCDATA "..\\assets\\vendor\\fonts\\KaTeX_Typewriter-Regular.woff2"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "SimpleMDViewer"
+            VALUE "FileDescription", "MD Viewer - fast, accessible Markdown document viewer"
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "InternalName", "MDView"
+            VALUE "OriginalFilename", "MDView.exe"
+            VALUE "ProductName", "Simple MD Viewer"
+            VALUE "ProductVersion", "1.0.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "5e0e0260bad506d444f49f72ab786832efe82419e500e8cf4a13a3ec39b81992"
+  },
+  "layerB": {
+    "normalizedHash": "2af44353816c8706c76911242896951aa8b10f80762af98c0ff7165e6c16509c",
+    "sample": "<h1 id=\"math-heavy-document\" tabindex=\"-1\">Math-Heavy Document</h1>\n<h2 id=\"formula-1\" tabindex=\"-1\">Formula 1</h2>\n<p>Inline: <eq>[KATEX:a_0^2 + b_0^2 = c_0^2]</eq></p>\n<section><eqn><span class=\"katex-display\">[KATEX:\n\\sum_{k=1}^{5} k^2 = \\frac{n(n+1)(2n+1)}{6}\n]</span></eqn></section><h2 id=\"formula-2\" tabindex=\"-1\">Formula 2</h2>\n<p>Inline: <eq>[KATEX:a_1^2 + b_1^2 = c_1^2]</eq></p>\n<section><eqn><span class=\"katex-display\">[KATEX:\n\\sum_{k=1}^{7} k^2 = \\frac{n(n+1)(2n+1)}{6}\n]</span></eqn></"
+  },
+  "layerC": {
+    "headings": 81,
+    "anchors": 81,
+    "tableWraps": 0,
+    "tables": 0,
+    "orderedLists": 0,
+    "codeBlocks": 0,
+    "copyBtns": 0,
+    "katex": 160,
+    "mermaid": 0,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 0,
+    "images": 0,
+    "links": 81,
+    "ariaBusy": "false"
+  }
+}

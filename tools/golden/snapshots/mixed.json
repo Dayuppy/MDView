@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "cd6a5b18b0c1f5d6c4655f3355389562f7a4539b751316b1ac020333cd730d7e"
+  },
+  "layerB": {
+    "normalizedHash": "fe4e7f8641d543fbe45aee33c6c06d0641f8c65ba0afc6a6ea0b56b04b1a4677",
+    "sample": "<h1 id=\"mixed-corpus-document\" tabindex=\"-1\">Mixed Corpus Document</h1>\n<h1 id=\"section-1\" tabindex=\"-1\">Section 1</h1>\n<p>Reference action markdown action code heading code. Caret over decorate the window stack code jumps.</p>\n<h1 id=\"section-2\" tabindex=\"-1\">Section 2</h1>\n<p>Worker reload accessible document quick worker block selection action worker. Window fox fox watcher document heading. Dog stream action stack fox render token dog table dirty document decorate table selection. Stream ren"
+  },
+  "layerC": {
+    "headings": 13,
+    "anchors": 13,
+    "tableWraps": 3,
+    "tables": 3,
+    "orderedLists": 0,
+    "codeBlocks": 2,
+    "copyBtns": 2,
+    "katex": 2,
+    "mermaid": 1,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 0,
+    "images": 0,
+    "links": 15,
+    "ariaBusy": "false"
+  }
+}

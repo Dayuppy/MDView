@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "33388b43f307c207b5cb5c354f0600a57391191ef75fafd43161450b1cc1f751"
+  },
+  "layerB": {
+    "normalizedHash": "1ad05322cbba009c1e0dca9daf156ec6f5b0cbe95fe9179c6d642ef7765f4d54",
+    "sample": "<h1 id=\"code-heavy-document\" tabindex=\"-1\">Code-Heavy Document</h1>\n<h2 id=\"snippet-1\" tabindex=\"-1\">Snippet 1</h2>\n<pre><code class=\"language-js\">  line_7044 = <span class=\"hljs-number\">444</span>;\n  line_4268 = <span class=\"hljs-number\">112</span>;\n  line_8028 = <span class=\"hljs-number\">290</span>;\n</code></pre>\n<h2 id=\"snippet-2\" tabindex=\"-1\">Snippet 2</h2>\n<pre><code class=\"language-powershell\">  line_8411 = <span class=\"hljs-number\">650</span>;\n  line_6621 = <span class=\"hljs-number\">721<"
+  },
+  "layerC": {
+    "headings": 61,
+    "anchors": 61,
+    "tableWraps": 0,
+    "tables": 0,
+    "orderedLists": 0,
+    "codeBlocks": 60,
+    "copyBtns": 60,
+    "katex": 0,
+    "mermaid": 0,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 0,
+    "images": 0,
+    "links": 61,
+    "ariaBusy": "false"
+  }
+}

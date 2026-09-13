@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "6ee1332f371046f38ab4912463dfbb56b26b537fc1a9a27350e42e8a0e3c337c"
+  },
+  "layerB": {
+    "normalizedHash": "a57cb52a23fd39dd1a27aad1c1d0c9a3ab21f1d82f8b22af99315aa4a7e8f336",
+    "sample": "<h1 id=\"mixed-corpus-document\" tabindex=\"-1\">Mixed Corpus Document</h1>\n<h1 id=\"section-1\" tabindex=\"-1\">Section 1</h1>\n<p>Sanitize token keyboard brown markdown footnote fox action lazy link window footnote dirty decorate. Image reference over window undo watcher fox focus block worker document keyboard markdown chunk.</p>\n<h3 id=\"section-2\" tabindex=\"-1\">Section 2</h3>\n<p>Selection toolbar chunk sanitize image native stream. Footnote chunk image undo fox the markdown window keyboard window lin"
+  },
+  "layerC": {
+    "headings": 401,
+    "anchors": 401,
+    "tableWraps": 100,
+    "tables": 100,
+    "orderedLists": 0,
+    "codeBlocks": 80,
+    "copyBtns": 80,
+    "katex": 66,
+    "mermaid": 50,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 0,
+    "images": 0,
+    "links": 467,
+    "ariaBusy": "false"
+  }
+}

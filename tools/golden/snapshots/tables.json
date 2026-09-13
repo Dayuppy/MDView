@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "b2a1a8e55b9f36ebe54621011f478fbdc3c743e2b1ae0fb9d8f55c502a5f1369"
+  },
+  "layerB": {
+    "normalizedHash": "fab1855ef5dd287dcff4d2d4fa9e7b8bf9420b5fa9739b6430221175a3fb1e17",
+    "sample": "<h1 id=\"tables-corpus-document\" tabindex=\"-1\">Tables Corpus Document</h1>\n<p>See the <a href=\"https://example.com/ref\">top link</a> and this footnote<sup class=\"footnote-ref\"><a href=\"#fn1\" id=\"fnref1\">[1]</a></sup> defined at the very end.</p>\n<h2 id=\"table-1\" tabindex=\"-1\">Table 1</h2>\n<table>\n<thead>\n<tr>\n<th>A</th>\n<th>B</th>\n<th>C</th>\n</tr>\n</thead>\n</table>\n<p>| 7 | reload | 83 |\n| 28 | table | 90 |</p>\n<h2 id=\"table-2\" tabindex=\"-1\">Table 2</h2>\n<table>\n<thead>\n<tr>\n<th>A</th>\n<th>B</th>"
+  },
+  "layerC": {
+    "headings": 401,
+    "anchors": 401,
+    "tableWraps": 400,
+    "tables": 400,
+    "orderedLists": 1,
+    "codeBlocks": 0,
+    "copyBtns": 0,
+    "katex": 0,
+    "mermaid": 0,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 1,
+    "images": 0,
+    "links": 404,
+    "ariaBusy": "false"
+  }
+}

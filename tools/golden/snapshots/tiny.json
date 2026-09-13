@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "d96fa92cd3d42e4e7e3e92d5a3d148e266242fa541ebc4469124568638108c3c"
+  },
+  "layerB": {
+    "normalizedHash": "43ce604335001a64ba105529c453b8cdc869c07d0038bc9f9a7ae579a551ba66",
+    "sample": "<h1 id=\"tiny\" tabindex=\"-1\">Tiny</h1>\n<p>The chunk fox native dog lazy. Accessible token chunk block sanitize the.</p>\n"
+  },
+  "layerC": {
+    "headings": 1,
+    "anchors": 1,
+    "tableWraps": 0,
+    "tables": 0,
+    "orderedLists": 0,
+    "codeBlocks": 0,
+    "copyBtns": 0,
+    "katex": 0,
+    "mermaid": 0,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 0,
+    "images": 0,
+    "links": 1,
+    "ariaBusy": "false"
+  }
+}

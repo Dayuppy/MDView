@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "fcf7d7a39e532709f74cab745581ee383ae92ff3ff4b821d0e3ab08c765c5311"
+  },
+  "layerB": {
+    "normalizedHash": "a424050d675ae05794e4ec9ade0d0fb0f6d74cbc690a94c855c3232b24f33948",
+    "sample": "<h1 id=\"this-looks-like-a-heading\" tabindex=\"-1\">This looks like a heading</h1>\n<p><strong>bold</strong> text and a <a href=\"https://example.com\">link</a></p>\n<p>Parser native quick block selection dirty progressive. Over brown dirty editing selection worker jumps native window.</p>\n"
+  },
+  "layerC": {
+    "headings": 0,
+    "anchors": 0,
+    "tableWraps": 0,
+    "tables": 0,
+    "orderedLists": 0,
+    "codeBlocks": 0,
+    "copyBtns": 0,
+    "katex": 0,
+    "mermaid": 0,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 0,
+    "images": 0,
+    "links": 0,
+    "ariaBusy": "null"
+  }
+}

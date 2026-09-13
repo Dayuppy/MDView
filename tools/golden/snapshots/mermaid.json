@@ -1,0 +1,26 @@
+{
+  "layerA": {
+    "tokenTypesHash": "0ef93daba52f94c9361cd248d4fa23e37e06db040f1da4e15173fc4cb9409013"
+  },
+  "layerB": {
+    "normalizedHash": "9c45854502cde189a509deb8e6df618974a12dc74b66e8072ed9aa6a515d7f20",
+    "sample": "<h1 id=\"mermaid-heavy-document\" tabindex=\"-1\">Mermaid-Heavy Document</h1>\n<h2 id=\"diagram-1\" tabindex=\"-1\">Diagram 1</h2>\n<pre><code class=\"language-mermaid\">graph TD\n  A0[Start] --&gt; B0{Decision 0}\n  B0 --&gt;|yes| C0[Do it]\n  B0 --&gt;|no| D0[Skip]\n</code></pre>\n<h2 id=\"diagram-2\" tabindex=\"-1\">Diagram 2</h2>\n<pre><code class=\"language-mermaid\">graph TD\n  A1[Start] --&gt; B1{Decision 1}\n  B1 --&gt;|yes| C1[Do it]\n  B1 --&gt;|no| D1[Skip]\n</code></pre>\n<h2 id=\"diagram-3\" tabindex=\"-1\">Diagram"
+  },
+  "layerC": {
+    "headings": 31,
+    "anchors": 31,
+    "tableWraps": 0,
+    "tables": 0,
+    "orderedLists": 0,
+    "codeBlocks": 0,
+    "copyBtns": 0,
+    "katex": 0,
+    "mermaid": 30,
+    "alerts": 0,
+    "taskBoxes": 0,
+    "footnotes": 0,
+    "images": 0,
+    "links": 31,
+    "ariaBusy": "false"
+  }
+}

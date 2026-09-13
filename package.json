@@ -1,0 +1,34 @@
+{
+  "name": "simplemdviewer-tools",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Node-based dev/test tooling for SimpleMDViewer (assets/, src/) -- not the app itself.",
+  "type": "module",
+  "scripts": {
+    "spike:worker-import": "node tools/dev/spike-worker-import.mjs",
+    "dev": "node tools/dev/serve.mjs",
+    "test:node": "node tools/run-node-tests.mjs",
+    "test:js": "playwright test",
+    "check:parity": "node tools/check-parity.mjs",
+    "check:accel": "node tools/check-accel-parity.mjs",
+    "lint": "eslint .",
+    "corpus": "node tools/corpus/gen-corpus.mjs",
+    "bench": "node tools/bench/render-bench.mjs",
+    "golden:update": "node tools/golden/update.mjs",
+    "golden:check": "node tools/golden/check.mjs",
+    "bench:exe": "node tools/bench/run.mjs",
+    "bench:compare": "node tools/bench/compare.mjs",
+    "bench:promote": "node tools/bench/promote.mjs",
+    "bench:trend": "node tools/bench/trend.mjs",
+    "check": "node tools/run-checks.mjs",
+    "check:full": "node tools/run-checks.mjs --full"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.62.1",
+    "eslint": "^9.39.5",
+    "globals": "^17.12.0",
+    "playwright": "^1.62.1",
+    "selfsigned": "^5.5.0"
+  }
+}

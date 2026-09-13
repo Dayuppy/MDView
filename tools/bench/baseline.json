@@ -1,0 +1,64 @@
+{
+  "corpusVersion": "85c18a3ef40554dff2dc94b0ff9ab4232f0cbc8886d795b82edcb8c0cf02004c",
+  "iterations": 5,
+  "results": {
+    "tiny": {
+      "min": 2742.3,
+      "median": 2761.7,
+      "mad": 15.800000000000182,
+      "max": 7504.3,
+      "iterations": 5
+    },
+    "mixed": {
+      "min": 2954.8,
+      "median": 2981.3,
+      "mad": 26.5,
+      "max": 8525.8,
+      "iterations": 5
+    },
+    "code": {
+      "min": 3379.4,
+      "median": 7811.2,
+      "mad": 18.800000000000182,
+      "max": 7830,
+      "iterations": 5
+    },
+    "math": {
+      "min": 3016.8,
+      "median": 3054.4,
+      "mad": 37.59999999999991,
+      "max": 8033.8,
+      "iterations": 5
+    },
+    "tables": {
+      "min": 2904.4,
+      "median": 7858.6,
+      "mad": 23.5,
+      "max": 7882.1,
+      "iterations": 5
+    },
+    "mermaid": {
+      "min": 3587.1,
+      "median": 8575.8,
+      "mad": 66.5,
+      "max": 8642.3,
+      "iterations": 5
+    },
+    "huge": {
+      "min": 4307.7,
+      "median": 4467.1,
+      "mad": 40.400000000000546,
+      "max": 9306,
+      "iterations": 5
+    },
+    "plain": {
+      "min": 2755.4,
+      "median": 2778.6,
+      "mad": 23.199999999999818,
+      "max": 7778.4,
+      "iterations": 5
+    }
+  },
+  "totalMs": 234540,
+  "ranAt": "2026-09-05T17:50:56.912Z"
+}
